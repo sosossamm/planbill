@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인테리어플랜Bill — 내 집 적정 인테리어 금액 확인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0F0E0C; --ink3:#4A4743; --muted:#8A8780;
+  --rule:#E8E5E0; --paper:#F8F6F2; --surface:#FFFFFF;
+  --accent:#1F4FD8;
+  --exp:#9A1F1F; --exp-bg:#FCEAEA;
+  --fair:#7A6010; --fair-bg:#FBF5E0;
+  --cheap:#1A6B3E; --cheap-bg:#EBF7F0;
+  --rc:14px; --rs:8px; --mw:820px; --pad:1.5rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:var(--mw);margin:0 auto;padding:0 var(--pad);}
+
+/* ── GNB ── */
+#gnb{background:var(--surface);border-bottom:1.5px solid var(--rule);position:sticky;top:0;z-index:100;}
+.gnb-in{max-width:var(--mw);margin:0 auto;padding:0 var(--pad);height:58px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-icon svg{width:18px;height:18px;}
+.logo-text{display:flex;flex-direction:column;line-height:1;}
+.logo-main{font-size:.95rem;font-weight:800;color:var(--ink);letter-spacing:-.02em;}
+.logo-main span{color:var(--accent);}
+.logo-sub{font-size:.65rem;font-weight:500;color:var(--muted);letter-spacing:.02em;margin-top:1px;}
+.gnb-home{display:inline-flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:var(--ink3);text-decoration:none;padding:7px 14px;border:1.5px solid var(--rule);border-radius:var(--rs);transition:all .18s;}
+.gnb-home:hover{border-color:var(--accent);color:var(--accent);background:#f0f4ff;}
+
+/* ── HERO ── */
+#hero{background:var(--ink);color:#fff;padding:76px var(--pad) 68px;text-align:center;position:relative;overflow:hidden;}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 30%,rgba(31,79,216,.18) 0%,transparent 70%),radial-gradient(ellipse 50% 60% at 80% 70%,rgba(31,79,216,.12) 0%,transparent 70%);pointer-events:none;}
+.hero-in{position:relative;max-width:var(--mw);margin:0 auto;}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:5px 14px;font-size:.72rem;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px;}
+.hero-pill i{width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;}
+#hero h1{font-size:clamp(1.85rem,5vw,2.8rem);font-weight:800;line-height:1.22;letter-spacing:-.025em;margin-bottom:10px;word-break:keep-all;}
+#hero h1 em{font-style:normal;color:#7fa8ff;}
+.hero-sub2{font-size:clamp(.95rem,2vw,1.1rem);color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:32px;word-break:keep-all;}
+.btn-hero{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-family:inherit;font-size:1rem;font-weight:700;padding:14px 28px;border:none;border-radius:var(--rs);cursor:pointer;text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s;letter-spacing:-.01em;}
+.btn-hero:hover{background:#1a44c4;transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,79,216,.4);}
+.hero-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:22px;}
+.htb{display:flex;align-items:center;gap:5px;font-size:.78rem;color:rgba(255,255,255,.45);}
+.htb svg{color:#4ade80;}
+
+/* ── HOW IT WORKS ── */
+#how{background:var(--surface);padding:64px var(--pad);}
+.sec-ey{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.sec-tt{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:8px;word-break:keep-all;}
+.sec-sb{font-size:.9rem;color:var(--ink3);margin-bottom:36px;word-break:keep-all;}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;}
+.how-steps::before{content:'';position:absolute;top:28px;left:calc(100%/6);right:calc(100%/6);height:1.5px;background:var(--rule);z-index:0;}
+@media(max-width:580px){.how-steps{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}}
+.hstep{text-align:center;padding:0 20px;position:relative;z-index:1;}
+.hstep-num{width:54px;height:54px;background:var(--accent);color:#fff;border-radius:50%;font-size:1.1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.hstep-tt{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:6px;word-break:keep-all;}
+.hstep-sb{font-size:.82rem;color:var(--ink3);line-height:1.6;word-break:keep-all;}
+
+/* ── CALC ── */
+#calc{padding:60px var(--pad);background:var(--paper);}
+.ccard{background:var(--surface);border:1.5px solid var(--rule);border-radius:var(--rc);padding:26px 28px;margin-bottom:12px;}
+.clabel{font-size:.78rem;font-weight:700;color:var(--ink3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.stepn{width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opt-badge{font-size:.68rem;font-weight:600;color:var(--muted);background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:2px 8px;margin-left:4px;}
+
+/* 지역 */
+.rbtns{display:flex;gap:10px;flex-wrap:wrap;}
+.rbtn{flex:1 1 calc(25% - 8px);min-width:68px;padding:11px 6px;border:1.5px solid var(--rule);border-radius:var(--rs);background:var(--surface);font-family:inherit;font-size:.88rem;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .18s;text-align:center;}
+.rbtn:hover{border-color:var(--accent);color:var(--accent);background:#f0f4ff;}
+.rbtn.on{border-color:var(--accent);background:var(--accent);color:#fff;}
+
+/* 슬라이더 */
+.srow{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.sl{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;outline:none;cursor:pointer;}
+.sl::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 2px 8px rgba(31,79,216,.35);cursor:pointer;transition:transform .15s;}
+.sl::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.sl::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 2px 8px rgba(31,79,216,.35);cursor:pointer;}
+.ninp{width:68px;padding:8px;border:1.5px solid var(--rule);border-radius:var(--rs);font-family:inherit;font-size:.88rem;font-weight:700;color:var(--ink);text-align:center;outline:none;}
+.ninp:focus{border-color:var(--accent);}
+.slsub{font-size:.8rem;color:var(--muted);}
+
+.bwrap{position:relative;height:34px;margin-bottom:4px;}
+.bubble{position:absolute;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:.78rem;font-weight:700;padding:3px 9px;border-radius:5px;white-space:nowrap;pointer-events:none;top:0;}
+.bubble::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom:none;border-top-color:var(--ink);}
+.bfb{margin-top:10px;font-size:.85rem;font-weight:600;padding:8px 13px;border-radius:var(--rs);display:none;word-break:keep-all;}
+.bfb.show{display:block;}
+.bfb.danger{background:var(--exp-bg);color:var(--exp);}
+.bfb.warning{background:var(--fair-bg);color:var(--fair);}
+.bfb.ok{background:var(--cheap-bg);color:var(--cheap);}
+
+/* 목적 3x2 */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:540px){.pgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:360px){.pgrid{grid-template-columns:1fr;}}
+.pbtn{position:relative;padding:14px 14px;border:1.5px solid var(--rule);border-radius:var(--rc);background:var(--surface);text-align:left;cursor:pointer;font-family:inherit;transition:all .2s;overflow:hidden;}
+.pbtn::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:transparent;transition:background .2s;}
+.pbtn:hover{border-color:var(--accent);background:#f8faff;}
+.pbtn:hover::before{background:rgba(31,79,216,.3);}
+.pbtn.on{border-color:var(--accent);background:#f0f4ff;}
+.pbtn.on::before{background:var(--accent);}
+.pemoji{font-size:1.25rem;margin-bottom:4px;display:block;}
+.pname{font-size:.85rem;font-weight:700;color:var(--ink);display:block;margin-bottom:2px;word-break:keep-all;}
+.pdesc{font-size:.72rem;color:var(--muted);line-height:1.4;display:block;word-break:keep-all;}
+
+/* 결과 버튼 */
+.btn-go{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s;margin-top:10px;letter-spacing:-.01em;display:flex;align-items:center;justify-content:center;gap:10px;}
+.btn-go:disabled{background:var(--rule);color:var(--muted);cursor:not-allowed;}
+.btn-go:not(:disabled):hover{background:#1a44c4;transform:translateY(-2px);box-shadow:0 8px 28px rgba(31,79,216,.4);}
+.btn-go svg{transition:transform .2s;}
+.btn-go:not(:disabled):hover svg{transform:translateX(4px);}
+
+/* ── TRUST ── */
+#trust{background:var(--surface);padding:52px var(--pad);text-align:center;}
+.trow{display:flex;flex-wrap:wrap;justify-content:center;max-width:var(--mw);margin:0 auto 16px;}
+.tstat{flex:1 1 160px;padding:20px 16px;border-right:1px solid var(--rule);}
+.tstat:last-child{border-right:none;}
+.tnum{font-size:1.9rem;font-weight:800;letter-spacing:-.03em;margin-bottom:3px;}
+.tnum span{color:var(--accent);}
+.tlbl{font-size:.8rem;color:var(--ink3);font-weight:500;}
+
+/* ── EXAMPLES ── */
+#examples{padding:60px var(--pad);background:var(--paper);}
+.egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:640px){.egrid{grid-template-columns:1fr;}}
+.ecard{background:var(--surface);border:1.5px solid var(--rule);border-radius:var(--rc);padding:22px 20px;display:flex;flex-direction:column;}
+.emeta{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;}
+.etitle{font-size:.92rem;font-weight:800;margin-bottom:14px;word-break:keep-all;}
+.erange{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;flex:1;}
+.erow{display:grid;grid-template-columns:52px 1fr 64px;align-items:center;gap:8px;}
+.elbl{font-size:.7rem;font-weight:600;color:var(--muted);}
+.ebar-wrap{height:6px;background:var(--rule);border-radius:3px;overflow:hidden;}
+.ebar{height:100%;border-radius:3px;}
+.ebar.s{background:#b8c9ff;width:40%;}
+.ebar.m{background:var(--accent);width:65%;}
+.ebar.p{background:#0a2fa8;width:100%;}
+.eprice{font-size:.78rem;font-weight:700;text-align:right;}
+.eprice.s{color:var(--ink3);}
+.eprice.m{color:var(--accent);}
+.eprice.p{color:#0a2fa8;}
+.btn-eg{width:100%;padding:9px;background:transparent;border:1.5px solid var(--accent);color:var(--accent);font-family:inherit;font-size:.82rem;font-weight:700;border-radius:var(--rs);cursor:pointer;transition:all .18s;}
+.btn-eg:hover{background:var(--accent);color:#fff;}
+
+/* ── TIPS ── */
+#tips{padding:64px var(--pad);background:var(--surface);}
+.tips-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;}
+.ttab{padding:8px 16px;border:1.5px solid var(--rule);border-radius:999px;background:var(--surface);font-family:inherit;font-size:.82rem;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .18s;}
+.ttab:hover{border-color:var(--accent);color:var(--accent);}
+.ttab.on{border-color:var(--accent);background:var(--accent);color:#fff;}
+.tips-list{display:none;flex-direction:column;gap:10px;}
+.tips-list.on{display:flex;}
+.tip-card{background:var(--paper);border:1.5px solid var(--rule);border-radius:var(--rc);padding:18px 20px;display:flex;gap:14px;align-items:flex-start;}
+.tip-icon{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;}
+.tip-body{}
+.tip-tt{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:4px;word-break:keep-all;}
+.tip-sb{font-size:.82rem;color:var(--ink3);line-height:1.65;word-break:keep-all;}
+
+/* ── FAQ ── */
+#faq{background:var(--paper);padding:60px var(--pad);}
+.fitem{border-bottom:1px solid var(--rule);}
+.fitem:first-child{border-top:1px solid var(--rule);}
+.fq{width:100%;background:none;border:none;text-align:left;padding:18px 0;font-family:inherit;font-size:.92rem;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.fqt{flex:1;word-break:keep-all;}
+.farr{width:18px;height:18px;flex-shrink:0;transition:transform .25s;color:var(--muted);}
+.fitem.open .farr{transform:rotate(180deg);}
+.fa2{overflow:hidden;max-height:0;transition:max-height .3s ease,padding .3s ease;font-size:.86rem;color:var(--ink3);line-height:1.8;word-break:keep-all;}
+.fitem.open .fa2{max-height:300px;padding-bottom:18px;}
+
+/* ── CTA ── */
+#cta{background:var(--ink);padding:68px var(--pad);text-align:center;position:relative;overflow:hidden;}
+#cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 80% 40%,rgba(31,79,216,.2) 0%,transparent 70%);pointer-events:none;}
+.ctain{position:relative;max-width:var(--mw);margin:0 auto;}
+#cta h2{font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:12px;word-break:keep-all;}
+#cta p{font-size:.92rem;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:32px;word-break:keep-all;}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);font-family:inherit;font-size:.95rem;font-weight:800;padding:14px 28px;border-radius:var(--rs);text-decoration:none;transition:all .2s;letter-spacing:-.01em;}
+.btn-cta:hover{background:#f0f4ff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.3);}
+
+footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.72rem;color:rgba(255,255,255,.22);}
+
+@media(max-width:600px){
+  #hero{padding:56px var(--pad) 52px;}
+  .ccard{padding:20px 16px;}
+  .tstat{border-right:none;border-bottom:1px solid var(--rule);}
+  .tstat:last-child{border-bottom:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- GNB -->
+<header id="gnb">
+  <div class="gnb-in">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3" height="6" rx="1" fill="white"/>
+          <rect x="7.5" y="6" width="3" height="10" rx="1" fill="white"/>
+          <rect x="13" y="2" width="3" height="14" rx="1" fill="white"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="logo-main">인테리어플랜<span>Bill</span></div>
+        <div class="logo-sub">적정 인테리어 금액 계산기</div>
+      </div>
+    </a>
+    <a href="index.html" class="gnb-home">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 6.5L8 2l6 4.5V14a1 1 0 01-1 1H3a1 1 0 01-1-1V6.5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15V9h4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      홈
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-in">
+    <div class="hero-pill"><i></i> 무료 · 회원가입 없음</div>
+    <h1>견적서 받기 전에<br><em>내 집 적정 금액,</em><br>먼저 확인하세요</h1>
+    <p class="hero-sub2">지역과 평수만 입력하면<br>절약형부터 프리미엄까지 한눈에 비교해드려요</p>
+    <button class="btn-hero" onclick="document.getElementById('calc').scrollIntoView({behavior:'smooth'})">
+      지금 무료로 확인하기
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="hero-trust">
+      <div class="htb"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 실제 견적 5,000건+ 기반</div>
+      <div class="htb"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 지역별 시세 반영</div>
+      <div class="htb"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 30초면 완료</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-ey">이용 방법</div>
+    <h2 class="sec-tt">3단계로 끝납니다</h2>
+    <p class="sec-sb">복잡한 정보 없이 딱 3가지만 입력하면 됩니다</p>
+    <div class="how-steps">
+      <div class="hstep">
+        <div class="hstep-num">1</div>
+        <div class="hstep-tt">지역·평수 입력</div>
+        <div class="hstep-sb">내 집이 있는 지역과 평수를 선택해요. 지역별 시세가 자동으로 반영됩니다</div>
+      </div>
+      <div class="hstep">
+        <div class="hstep-num">2</div>
+        <div class="hstep-tt">목적 선택</div>
+        <div class="hstep-sb">깔끔하게 새집처럼, 욕실 집중, 매도 가치 올리기 등 6가지 목적 중 선택해요</div>
+      </div>
+      <div class="hstep">
+        <div class="hstep-num">3</div>
+        <div class="hstep-tt">3단계 금액 확인</div>
+        <div class="hstep-sb">절약형·적정·프리미엄 금액을 공종별로 비교하고 내 예산 수준을 확인해요</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-ey">예산 계산기</div>
+    <h2 class="sec-tt">지역과 평수를 입력해주세요</h2>
+    <p class="sec-sb">내 예산을 입력하면 어느 수준에 해당하는지도 바로 알 수 있어요</p>
+
+    <!-- Step 1 -->
+    <div class="ccard">
+      <div class="clabel"><span class="stepn">1</span> 지역 선택</div>
+      <div class="rbtns">
+        <button class="rbtn" data-v="서울"   onclick="pickRegion(this)">서울</button>
+        <button class="rbtn" data-v="수도권" onclick="pickRegion(this)">수도권</button>
+        <button class="rbtn" data-v="광역시" onclick="pickRegion(this)">광역시</button>
+        <button class="rbtn" data-v="기타"   onclick="pickRegion(this)">기타</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="ccard">
+      <div class="clabel"><span class="stepn">2</span> 평수 입력</div>
+      <div class="srow">
+        <input type="range" class="sl" id="slP" min="10" max="80" step="5" value="33" oninput="onPyeong(this.value)">
+        <input type="number" class="ninp" id="numP" min="10" max="80" step="1" value="33" oninput="onPyeongN(this.value)">
+        <span style="font-size:.85rem;font-weight:700;color:var(--ink3);">평</span>
+      </div>
+      <div class="slsub" id="subP">약 109㎡</div>
+    </div>
+
+    <!-- Step 3: 예산 (선택) -->
+    <div class="ccard">
+      <div class="clabel">
+        <span class="stepn">3</span> 내 예산
+        <span class="opt-badge">선택</span>
+      </div>
+      <p style="font-size:.82rem;color:var(--ink3);margin-bottom:14px;">입력하면 3단계 중 내 예산이 어디 해당하는지 표시해드려요</p>
+      <div class="bwrap"><div class="bubble" id="bubble" style="left:50%">3,000만원</div></div>
+      <input type="range" class="sl" id="slB" min="0" max="100" step="1" value="50" oninput="onBudget(this.value)" style="width:100%;margin-bottom:8px;">
+      <div class="slsub" id="subB" style="margin-bottom:6px;"></div>
+      <div class="bfb" id="bfb"></div>
+    </div>
+
+    <!-- Step 4: 목적 3x2 -->
+    <div class="ccard">
+      <div class="clabel"><span class="stepn">4</span> 인테리어 목적</div>
+      <div class="pgrid" id="pgrid"></div>
+    </div>
+
+    <button class="btn-go" id="btnGo" disabled onclick="goResult()">
+      적정 금액 확인하기
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="trow">
+    <div class="tstat"><div class="tnum"><span>5,000</span>건+</div><div class="tlbl">실제 견적 분석</div></div>
+    <div class="tstat"><div class="tnum"><span>4</span>개 지역</div><div class="tlbl">시세 반영</div></div>
+    <div class="tstat"><div class="tnum"><span>30</span>초</div><div class="tlbl">금액 확인</div></div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section id="examples">
+  <div class="wrap">
+    <div class="sec-ey">결과 미리보기</div>
+    <h2 class="sec-tt" style="margin-bottom:6px;">이런 결과가 나와요</h2>
+    <p class="sec-sb">샘플을 눌러 바로 계산해보세요</p>
+    <div class="egrid">
+      <div class="ecard">
+        <div class="emeta">케이스 1</div>
+        <div class="etitle">서울 25평 · 새집처럼</div>
+        <div class="erange">
+          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">1,800만</span></div>
+          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">3,200만</span></div>
+          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">5,000만</span></div>
+        </div>
+        <button class="btn-eg" onclick="applyEg('서울',25,'clean')">나도 확인해보기 →</button>
+      </div>
+      <div class="ecard">
+        <div class="emeta">케이스 2</div>
+        <div class="etitle">수도권 33평 · 전체 리모델링</div>
+        <div class="erange">
+          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">3,000만</span></div>
+          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">4,400만</span></div>
+          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">6,600만</span></div>
+        </div>
+        <button class="btn-eg" onclick="applyEg('수도권',33,'resale')">나도 확인해보기 →</button>
+      </div>
+      <div class="ecard">
+        <div class="emeta">케이스 3</div>
+        <div class="etitle">광역시 45평 · 고급 마감</div>
+        <div class="erange">
+          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">4,200만</span></div>
+          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">6,300만</span></div>
+          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">9,400만</span></div>
+        </div>
+        <button class="btn-eg" onclick="applyEg('광역시',45,'premium')">나도 확인해보기 →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips">
+  <div class="wrap">
+    <div class="sec-ey">전문가 조언</div>
+    <h2 class="sec-tt" style="margin-bottom:6px;">공사 전에 꼭 알아야 할 것들</h2>
+    <p class="sec-sb">목적별 핵심 포인트만 골라드립니다</p>
+    <div class="tips-tabs" id="tipsTabs"></div>
+    <div id="tipsContent"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-ey">자주 묻는 질문</div>
+    <h2 class="sec-tt" style="margin-bottom:28px;">FAQ</h2>
+    <div id="flist" style="max-width:var(--mw);margin:0 auto;"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="ctain">
+    <h2>견적서 받으셨나요?</h2>
+    <p>항목별로 바가지 여부를 AI가 분석해드려요.<br>비싼 항목만 골라 협상 포인트까지 알려드립니다.</p>
+    <a class="btn-cta" href="https://quote-analysis.site" target="_blank" rel="noopener">
+      견적서 AI 분석 받기
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer>© 2025 인테리어플랜Bill · 본 계산기는 참고용이며 실제 시공가와 다를 수 있습니다</footer>
+
+<script>
+const RC = {
+  '서울':  {coef:1.30,base:163},
+  '수도권':{coef:1.15,base:134},
+  '광역시':{coef:1.05,base:118},
+  '기타':  {coef:1.00,base:100}
+};
+
+const PURPOSES = [
+  {id:'clean',    emoji:'✨', name:'새집처럼 깔끔하게',   desc:'도배·바닥 중심 전체 정리'},
+  {id:'kitchen',  emoji:'🍳', name:'주방 중심',           desc:'싱크대·타일 집중 공사'},
+  {id:'bathroom', emoji:'🚿', name:'욕실 집중',           desc:'타일·도기·방수 전면 교체'},
+  {id:'resale',   emoji:'📈', name:'매도·전세 가치',      desc:'가성비 높은 공종 우선'},
+  {id:'safe',     emoji:'🔒', name:'안전·노후 교체',      desc:'전기·창호 기능 개선'},
+  {id:'premium',  emoji:'💎', name:'고급 마감',           desc:'원목·수입 자재 사용'},
+];
+
+const TIPS = {
+  clean: [
+    {icon:'🎨', tt:'친환경 도배재 선택', sb:'도배는 HB 마크 인증 제품을 선택하세요. 입주 후 새집증후군을 예방하는 데 효과적이며, 가격 차이도 크지 않습니다.'},
+    {icon:'🪵', tt:'바닥 시공 전 평탄화 확인', sb:'바닥재 시공 전 기존 바닥 상태를 반드시 확인하세요. 평탄화 작업이 필요한 경우 비용이 20~30% 추가될 수 있습니다.'},
+  ],
+  kitchen: [
+    {icon:'🍳', tt:'싱크대는 세트로', sb:'싱크대 교체 시 상부장까지 세트로 하면 완성도가 높아집니다. 따로 하면 색상과 마감이 달라 어색해 보일 수 있어요.'},
+    {icon:'💨', tt:'환기 성능이 핵심', sb:'주방 환기 성능이 집 전체 공기질을 결정합니다. 렌지후드는 풍량 700㎥/h 이상 제품을 권장해요.'},
+    {icon:'🪨', tt:'상판 소재 선택법', sb:'싱크대 상판은 인조대리석이 관리가 편하고 가성비가 좋아요. 천연석은 고급스럽지만 산성 음식에 약해 주기적인 코팅이 필요합니다.'},
+  ],
+  bathroom: [
+    {icon:'💧', tt:'방수는 2회 이상이 원칙', sb:'욕실 방수는 최소 2회 이상 도포가 원칙이에요. 공사 중 방수 횟수를 직접 확인하는 것이 나중에 누수를 막는 가장 확실한 방법입니다.'},
+    {icon:'🧱', tt:'줄눈 색상이 분위기 결정', sb:'욕실 타일은 줄눈 색상이 전체 분위기를 좌우해요. 밝은 줄눈은 청결해 보이지만 오염에 취약하고, 진한 줄눈은 유지가 쉬워 실용적입니다.'},
+  ],
+  resale: [
+    {icon:'🏠', tt:'도배·장판이 가성비 1위', sb:'매도·임대가 목적이라면 고가 마감재보다 도배·장판 교체가 투자 대비 효과가 가장 높아요. 비용 대비 체감 효과 1위입니다.'},
+    {icon:'💡', tt:'조명 교체로 극적인 변화', sb:'조명 교체는 공사 비용 대비 공간 분위기를 가장 극적으로 바꿀 수 있어요. 거실 메인 조명과 주방 펜던트만 바꿔도 전혀 다른 집처럼 보입니다.'},
+  ],
+  safe: [
+    {icon:'⚡', tt:'알루미늄 배선은 반드시 교체', sb:'15년 이상 된 주택은 전기 배선이 알루미늄 재질일 수 있어요. 구리 배선으로 교체하면 화재 위험이 크게 줄어듭니다.'},
+    {icon:'🪟', tt:'샷시는 단열 등급 확인', sb:'발코니샷시는 단열 성능 등급을 꼭 확인하세요. 1등급 제품은 초기 비용이 20% 높지만 난방비를 연간 15~20% 절감해줍니다.'},
+    {icon:'🚪', tt:'방화문 인증으로 보험 혜택', sb:'현관문 교체 시 방화문 인증 제품을 선택하면 화재보험료 할인 혜택을 받을 수 있어요.'},
+  ],
+  premium: [
+    {icon:'🌳', tt:'원목마루 방향이 중요', sb:'원목마루는 직사광선에 지속 노출되면 뒤틀릴 수 있어요. 창 방향과 마루 결 방향을 맞추면 수축·팽창으로 인한 변형을 줄일 수 있습니다.'},
+    {icon:'✨', tt:'마감재보다 시공 품질이 먼저', sb:'고급 자재도 시공이 나쁘면 의미가 없어요. 시공 업체의 포트폴리오와 하자 보증 기간을 반드시 확인하세요.'},
+  ],
+};
+
+// 목적 버튼 렌더
+const pg = document.getElementById('pgrid');
+PURPOSES.forEach(p => {
+  const b = document.createElement('button');
+  b.className='pbtn'; b.dataset.id=p.id;
+  b.onclick=()=>pickPurpose(p.id);
+  b.innerHTML=`<span class="pemoji">${p.emoji}</span><span class="pname">${p.name}</span><span class="pdesc">${p.desc}</span>`;
+  pg.appendChild(b);
+});
+
+// 팁 탭 렌더
+const tabsEl = document.getElementById('tipsTabs');
+const contEl = document.getElementById('tipsContent');
+PURPOSES.forEach((p, idx) => {
+  const tab = document.createElement('button');
+  tab.className='ttab'+(idx===0?' on':''); tab.dataset.id=p.id;
+  tab.textContent=p.emoji+' '+p.name;
+  tab.onclick=()=>switchTip(p.id);
+  tabsEl.appendChild(tab);
+
+  const list = document.createElement('div');
+  list.className='tips-list'+(idx===0?' on':''); list.dataset.id=p.id;
+  (TIPS[p.id]||[]).forEach(t=>{
+    list.innerHTML+=`<div class="tip-card"><div class="tip-icon">${t.icon}</div><div class="tip-body"><div class="tip-tt">${t.tt}</div><div class="tip-sb">${t.sb}</div></div></div>`;
+  });
+  contEl.appendChild(list);
+});
+
+function switchTip(id){
+  document.querySelectorAll('.ttab').forEach(t=>t.classList.toggle('on',t.dataset.id===id));
+  document.querySelectorAll('.tips-list').forEach(l=>l.classList.toggle('on',l.dataset.id===id));
+}
+
+// 상태
+const S={region:null,pyeong:33,budgetIdx:50,purpose:null};
+
+function i2b(i){i=+i;if(i<=25)return 500+i*100;if(i<=33)return 3000+(i-25)*250;return 5000+(i-33)*500;}
+function b2i(b){if(b<=3000)return Math.round((b-500)/100);if(b<=5000)return 25+Math.round((b-3000)/250);return 33+Math.round((b-5000)/500);}
+function getBudget(){return i2b(S.budgetIdx);}
+function fillSl(el){const p=(+el.value-+el.min)/(+el.max-+el.min)*100;el.style.background=`linear-gradient(to right,var(--accent) ${p}%,var(--rule) ${p}%)`;}
+function fmt(m){if(m>=10000){const u=Math.floor(m/10000),r=m%10000;return r>0?`${u}억 ${r.toLocaleString()}만원`:`${u}억원`;}return m.toLocaleString()+'만원';}
+
+function pickRegion(btn){
+  document.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); S.region=btn.dataset.v;
+  updateFB(); checkReady();
+}
+function pickPurpose(id){
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+  S.purpose=id; checkReady();
+  switchTip(id);
+}
+function onPyeong(v){
+  v=Math.min(80,Math.max(10,Math.round(+v/5)*5)); S.pyeong=v;
+  document.getElementById('numP').value=v;
+  document.getElementById('slP').value=v;
+  document.getElementById('subP').textContent=`약 ${Math.round(v*3.305)}㎡`;
+  fillSl(document.getElementById('slP'));
+  updateFB();
+}
+function onPyeongN(v){
+  v=+v; if(isNaN(v)||v<10)v=10; if(v>80)v=80;
+  S.pyeong=v;
+  document.getElementById('slP').value=Math.round(v/5)*5;
+  document.getElementById('subP').textContent=`약 ${Math.round(v*3.305)}㎡`;
+  fillSl(document.getElementById('slP'));
+  updateFB();
+}
+function onBudget(idx){
+  S.budgetIdx=+idx; const b=getBudget();
+  const sl=document.getElementById('slB');
+  fillSl(sl);
+  const pct=(+idx-+sl.min)/(+sl.max-+sl.min);
+  const lx=22/2+pct*(sl.offsetWidth-22);
+  document.getElementById('bubble').style.left=lx+'px';
+  document.getElementById('bubble').textContent=fmt(b);
+  document.getElementById('subB').textContent=`총 예산 ${fmt(b)}`;
+  updateFB();
+}
+function updateFB(){
+  const fb=document.getElementById('bfb');
+  if(!S.region){fb.className='bfb';return;}
+  const r=getBudget()/(RC[S.region].base*S.pyeong);
+  if(r<0.6){fb.className='bfb show danger';fb.textContent='⚠️ 절약형 수준의 예산이에요';}
+  else if(r<0.85){fb.className='bfb show warning';fb.textContent='절약형~적정 사이의 예산이에요';}
+  else if(r<1.15){fb.className='bfb show ok';fb.textContent='✓ 적정 수준의 예산이에요';}
+  else if(r<1.5){fb.className='bfb show ok';fb.textContent='적정~프리미엄 사이의 예산이에요';}
+  else{fb.className='bfb show ok';fb.textContent='프리미엄 시공이 가능한 예산이에요';}
+}
+function checkReady(){document.getElementById('btnGo').disabled=!(S.region&&S.purpose);}
+
+function goResult(){
+  const q=new URLSearchParams({region:S.region,pyeong:S.pyeong,budget:getBudget(),purpose:S.purpose});
+  window.location.href='result.html?'+q.toString();
+}
+function applyEg(region,pyeong,purposeId){
+  document.querySelectorAll('.rbtn').forEach(b=>b.classList.toggle('on',b.dataset.v===region));
+  S.region=region; S.pyeong=pyeong;
+  document.getElementById('slP').value=pyeong;
+  document.getElementById('numP').value=pyeong;
+  document.getElementById('subP').textContent=`약 ${Math.round(pyeong*3.305)}㎡`;
+  fillSl(document.getElementById('slP'));
+  pickPurpose(purposeId);
+  document.getElementById('calc').scrollIntoView({behavior:'smooth'});
+}
+
+// FAQ
+[
+  {q:'얼마나 정확한가요?',        a:'실제 시공 가격은 업체마다 20~30% 차이가 납니다. 이 계산기는 예산을 잡는 용도이며, 5,000건+ 실거래 데이터 기반으로 적정 범위를 제공합니다.'},
+  {q:'지역마다 가격이 다른가요?', a:'서울이 기타 지역보다 평균 30% 높습니다. 서울 163만/평, 수도권 134만/평, 광역시 118만/평 기준으로 산출됩니다.'},
+  {q:'절약형·적정·프리미엄 기준이 뭔가요?', a:'절약형은 기능에 충실한 기본 자재, 적정은 가성비 좋은 중급 자재, 프리미엄은 고급·수입 자재 기준입니다. 공종별 단가 데이터를 기반으로 산출합니다.'},
+  {q:'부분 공사도 계산되나요?',   a:'현재는 전체 리모델링 기준입니다. 욕실만, 주방만 등 부분 공사 기능은 추후 추가 예정입니다.'},
+  {q:'견적서를 이미 받았는데요?', a:'아래 버튼에서 견적서를 AI로 분석하면 항목별 바가지 여부를 확인할 수 있어요.'},
+].forEach(f=>{
+  const d=document.createElement('div'); d.className='fitem';
+  d.innerHTML=`<button class="fq" onclick="this.closest('.fitem').classList.toggle('open')"><span class="fqt">Q. ${f.q}</span><svg class="farr" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="fa2">A. ${f.a}</div>`;
+  document.getElementById('flist').appendChild(d);
+});
+
+window.addEventListener('load',()=>{
+  fillSl(document.getElementById('slP'));
+  document.getElementById('subP').textContent=`약 ${Math.round(33*3.305)}㎡`;
+  setTimeout(()=>onBudget(50),80);
+});
+window.addEventListener('resize',()=>onBudget(S.budgetIdx));
+</script>
+</body>
+</html>
