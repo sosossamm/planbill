@@ -316,42 +316,52 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
             <div class="inv-subtitle">서울 · 33평 · 새집처럼</div>
           </div>
         </div>
-        <div class="inv-meta">
-          <span class="inv-chip">절약형</span>
-          <span class="inv-chip" style="background:rgba(31,79,216,.5);color:#c4d4ff;border-color:rgba(100,140,255,.3);">적정 ✓</span>
-          <span class="inv-chip">프리미엄</span>
+        <!-- 3단 버튼 미리보기 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:14px;">
+          <div style="padding:8px 4px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);text-align:center;">
+            <div style="font-size:.58rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.05em;margin-bottom:3px;">절약형</div>
+            <div style="font-size:.78rem;font-weight:800;color:rgba(255,255,255,.55);">2,050만</div>
+          </div>
+          <div style="padding:8px 4px;border-radius:8px;background:rgba(31,79,216,.35);border:1px solid rgba(127,168,255,.35);text-align:center;">
+            <div style="font-size:.58rem;font-weight:700;color:#7fa8ff;letter-spacing:.05em;margin-bottom:3px;">적정 ✓</div>
+            <div style="font-size:.78rem;font-weight:800;color:#fff;">3,660만</div>
+          </div>
+          <div style="padding:8px 4px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);text-align:center;">
+            <div style="font-size:.58rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.05em;margin-bottom:3px;">프리미엄</div>
+            <div style="font-size:.78rem;font-weight:800;color:rgba(255,255,255,.55);">5,700만</div>
+          </div>
         </div>
         <div class="inv-rows">
           <div class="inv-row">
             <div class="inv-dot priority"></div>
-            <div class="inv-label">도배</div>
+            <div class="inv-label">도배 <span style="font-size:.58rem;color:rgba(255,255,255,.3);">실크벽지</span></div>
             <div class="inv-bar-wrap"><div class="inv-bar lg"></div></div>
-            <div class="inv-price">171만</div>
+            <div class="inv-price">125만</div>
           </div>
           <div class="inv-row">
             <div class="inv-dot priority"></div>
-            <div class="inv-label">바닥재</div>
+            <div class="inv-label">바닥재 <span style="font-size:.58rem;color:rgba(255,255,255,.3);">강마루</span></div>
             <div class="inv-bar-wrap"><div class="inv-bar md"></div></div>
-            <div class="inv-price">536만</div>
+            <div class="inv-price">540만</div>
           </div>
           <div class="inv-row">
             <div class="inv-dot normal"></div>
-            <div class="inv-label">철거</div>
+            <div class="inv-label">목공/몰딩</div>
             <div class="inv-bar-wrap"><div class="inv-bar sm"></div></div>
-            <div class="inv-price">706만</div>
+            <div class="inv-price">323만</div>
           </div>
           <div class="inv-row">
             <div class="inv-dot normal"></div>
-            <div class="inv-label">입주청소</div>
+            <div class="inv-label">전기배선</div>
             <div class="inv-bar-wrap"><div class="inv-bar xs"></div></div>
-            <div class="inv-price">211만</div>
+            <div class="inv-price">499만</div>
           </div>
         </div>
         <div class="inv-total">
           <div class="inv-total-label">적정 예상 총액</div>
           <div>
-            <div class="inv-total-price">3,860만원 <span>✓ 적정</span></div>
-            <div class="inv-range-hint">절약형 2,200만 — 프리미엄 6,100만</div>
+            <div class="inv-total-price">3,660만원 <span>✓ 적정</span></div>
+            <div class="inv-range-hint">절약형 2,050만 — 프리미엄 5,700만</div>
           </div>
         </div>
       </div>
@@ -366,7 +376,7 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
   <div class="wrap">
     <div class="sec-ey">예산 계산기</div>
     <h2 class="sec-tt">지역과 평수를 입력해주세요</h2>
-    <p class="sec-sb">내 예산을 입력하면 어느 수준에 해당하는지도 바로 알 수 있어요</p>
+    <p class="sec-sb">내 예산을 입력하면 절약형·적정·프리미엄 중 어디 해당하는지 바로 알 수 있어요</p>
 
     <!-- Step 1 -->
     <div class="ccard">
@@ -396,7 +406,7 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
         <span class="stepn">3</span> 내 예산
         <span class="opt-badge">선택</span>
       </div>
-      <p style="font-size:.82rem;color:var(--ink3);margin-bottom:14px;">입력하면 3단계 중 내 예산이 어디 해당하는지 표시해드려요</p>
+      <p style="font-size:.82rem;color:var(--ink3);margin-bottom:14px;">입력하면 절약형·적정·프리미엄 3단계 중 내 예산이 어디 해당하는지 표시해드려요</p>
       <div class="bwrap"><div class="bubble" id="bubble" style="left:50%">1억 5,000만원</div></div>
       <input type="range" class="sl" id="slB" min="500" max="30000" step="100" value="15000" oninput="onBudget(this.value)" style="width:100%;margin-bottom:8px;">
       <div class="slsub" id="subB" style="margin-bottom:6px;"></div>
@@ -431,12 +441,12 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
       <div class="trust-card">
         <div class="trust-icon">📍</div>
         <div class="trust-tt">우리 동네 실제 시세 기반</div>
-        <div class="trust-sb">서울·수도권·광역시·기타 지역별로 다른 시세를 반영합니다. 5,000건+ 실제 견적 분석으로 만든 기준값입니다.</div>
+        <div class="trust-sb">서울·수도권·광역시·기타 지역별로 다른 시세를 반영합니다. 2024~2025년 실거래 단가 분석으로 만든 기준값입니다.</div>
       </div>
       <div class="trust-card">
         <div class="trust-icon">⚡</div>
         <div class="trust-tt">30초, 3가지만 입력</div>
-        <div class="trust-sb">지역, 평수, 목적. 딱 3가지만 입력하면 공종별 절약형·적정·프리미엄 금액을 바로 확인할 수 있습니다.</div>
+        <div class="trust-sb">지역, 평수, 목적. 딱 3가지만 입력하면 공종별 절약형·적정·프리미엄 금액을 한눈에 비교하고, 등급별 추천 공종까지 확인할 수 있습니다.</div>
       </div>
     </div>
   </div>
@@ -453,19 +463,19 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
         <div class="emeta">케이스 1</div>
         <div class="etitle">서울 25평 · 새집처럼</div>
         <div class="erange">
-          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">1,800만</span></div>
-          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">3,200만</span></div>
-          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">5,000만</span></div>
+          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">3,500만</span></div>
+          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">5,600만</span></div>
+          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">8,600만</span></div>
         </div>
         <button class="btn-eg" onclick="applyEg('서울',25,'clean')">나도 확인해보기 →</button>
       </div>
       <div class="ecard">
         <div class="emeta">케이스 2</div>
-        <div class="etitle">수도권 33평 · 전체 리모델링</div>
+        <div class="etitle">수도권 33평 · 매도·전세 가치</div>
         <div class="erange">
-          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">3,000만</span></div>
-          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">4,400만</span></div>
-          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">6,600만</span></div>
+          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">4,200만</span></div>
+          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">6,600만</span></div>
+          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">1억 200만</span></div>
         </div>
         <button class="btn-eg" onclick="applyEg('수도권',33,'resale')">나도 확인해보기 →</button>
       </div>
@@ -473,9 +483,9 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
         <div class="emeta">케이스 3</div>
         <div class="etitle">광역시 45평 · 고급 마감</div>
         <div class="erange">
-          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">4,200만</span></div>
-          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">6,300만</span></div>
-          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">9,400만</span></div>
+          <div class="erow"><span class="elbl">절약형</span><div class="ebar-wrap"><div class="ebar s"></div></div><span class="eprice s">5,300만</span></div>
+          <div class="erow"><span class="elbl" style="color:var(--accent);font-weight:700;">적정</span><div class="ebar-wrap"><div class="ebar m"></div></div><span class="eprice m">8,400만</span></div>
+          <div class="erow"><span class="elbl">프리미엄</span><div class="ebar-wrap"><div class="ebar p"></div></div><span class="eprice p">1억 2,900만</span></div>
         </div>
         <button class="btn-eg" onclick="applyEg('광역시',45,'premium')">나도 확인해보기 →</button>
       </div>
@@ -519,9 +529,9 @@ footer{background:#0a0908;padding:20px var(--pad);text-align:center;font-size:.7
 
 <script>
 const RC = {
-  '서울':  {coef:1.30,base:163},
-  '수도권':{coef:1.15,base:134},
-  '광역시':{coef:1.05,base:118},
+  '서울':  {coef:1.28,base:155},
+  '수도권':{coef:1.12,base:128},
+  '광역시':{coef:1.05,base:115},
   '기타':  {coef:1.00,base:100}
 };
 
@@ -841,9 +851,10 @@ function applyEg(region,pyeong,purposeId){
 
 // FAQ
 [
-  {q:'얼마나 정확한가요?',        a:'실제 시공 가격은 업체마다 20~30% 차이가 납니다. 이 계산기는 예산을 잡는 용도이며, 5,000건+ 실거래 데이터 기반으로 적정 범위를 제공합니다.'},
-  {q:'지역마다 가격이 다른가요?', a:'서울이 기타 지역보다 평균 30% 높습니다. 서울 163만/평, 수도권 134만/평, 광역시 118만/평 기준으로 산출됩니다.'},
-  {q:'절약형·적정·프리미엄 기준이 뭔가요?', a:'절약형은 기능에 충실한 기본 자재, 적정은 가성비 좋은 중급 자재, 프리미엄은 고급·수입 자재 기준입니다. 공종별 단가 데이터를 기반으로 산출합니다.'},
+  {q:'얼마나 정확한가요?',        a:'실제 시공 가격은 업체·자재·시기마다 20~30% 차이가 납니다. 이 계산기는 2024~2025년 실거래 시세와 공종별 단가 데이터를 기반으로 예산 범위를 제시하며, 참고용으로 활용하세요.'},
+  {q:'지역마다 가격이 다른가요?', a:'서울이 기타 지역보다 평균 28% 높습니다. 서울 약 155만/평, 수도권 128만/평, 광역시 115만/평 기준으로 산출됩니다.'},
+  {q:'절약형·적정·프리미엄 기준이 뭔가요?', a:'절약형은 합지벽지·PVC장판 등 기본 자재, 적정은 실크벽지·강마루 등 중급 자재, 프리미엄은 수입벽지·원목마루 등 고급 자재 기준입니다. 결과 페이지에서 각 등급 버튼을 누르면 자재 기준과 추천 공종이 자세히 나와요.'},
+  {q:'추천 필수 공종은 어떻게 다른가요?', a:'결과 페이지에서 절약형·적정·프리미엄 탭을 누르면 등급별로 포함 공종이 달라집니다. 절약형은 3~4개, 적정은 5~6개, 프리미엄은 최대 10개 공종이 추천되며, 각 공종에 선택 이유도 함께 표시돼요.'},
   {q:'부분 공사도 계산되나요?',   a:'현재는 전체 리모델링 기준입니다. 욕실만, 주방만 등 부분 공사 기능은 추후 추가 예정입니다.'},
   {q:'견적서를 이미 받았는데요?', a:'아래 버튼에서 견적서를 AI로 분석하면 항목별 바가지 여부를 확인할 수 있어요.'},
 ].forEach(f=>{
