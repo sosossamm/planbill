@@ -236,12 +236,12 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);background:var(--pap
 #faq{background:var(--paper);padding:60px var(--pad);}
 .fitem{border-bottom:1px solid var(--rule);}
 .fitem:first-child{border-top:1px solid var(--rule);}
-.fq{width:100%;background:none;border:none;text-align:left;padding:18px 0;font-family:inherit;font-size:.92rem;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.fqt{flex:1;word-break:keep-all;}
-.farr{width:18px;height:18px;flex-shrink:0;transition:transform .25s;color:var(--muted);}
+.fq{width:100%;background:none;border:none;text-align:left;padding:22px 0;font-family:inherit;font-size:1.05rem;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.fqt{flex:1;word-break:keep-all;line-height:1.45;}
+.farr{width:20px;height:20px;flex-shrink:0;transition:transform .25s;color:var(--muted);}
 .fitem.open .farr{transform:rotate(180deg);}
-.fa2{overflow:hidden;max-height:0;transition:max-height .3s ease,padding .3s ease;font-size:.86rem;color:var(--ink3);line-height:1.8;word-break:keep-all;}
-.fitem.open .fa2{max-height:300px;padding-bottom:18px;}
+.fa2{overflow:hidden;max-height:0;transition:max-height .45s ease,padding .3s ease;font-size:.97rem;color:var(--ink3);line-height:1.9;word-break:keep-all;}
+.fitem.open .fa2{max-height:600px;padding-bottom:22px;}
 
 /* ── CTA ── */
 #cta{background:var(--ink);padding:68px var(--pad);text-align:center;position:relative;overflow:hidden;}
@@ -851,15 +851,14 @@ function applyEg(region,pyeong,purposeId){
 
 // FAQ
 [
-  {q:'얼마나 정확한가요?',        a:'실제 시공 가격은 업체·자재·시기마다 20~30% 차이가 납니다. 이 계산기는 2024~2025년 실거래 시세와 공종별 단가 데이터를 기반으로 예산 범위를 제시하며, 참고용으로 활용하세요.'},
-  {q:'지역마다 가격이 다른가요?', a:'서울이 기타 지역보다 평균 28% 높습니다. 서울 약 155만/평, 수도권 128만/평, 광역시 115만/평 기준으로 산출됩니다.'},
-  {q:'절약형·적정·프리미엄 기준이 뭔가요?', a:'절약형은 합지벽지·PVC장판 등 기본 자재, 적정은 실크벽지·강마루 등 중급 자재, 프리미엄은 수입벽지·원목마루 등 고급 자재 기준입니다. 결과 페이지에서 각 등급 버튼을 누르면 자재 기준과 추천 공종이 자세히 나와요.'},
-  {q:'추천 필수 공종은 어떻게 다른가요?', a:'결과 페이지에서 절약형·적정·프리미엄 탭을 누르면 등급별로 포함 공종이 달라집니다. 절약형은 3~4개, 적정은 5~6개, 프리미엄은 최대 10개 공종이 추천되며, 각 공종에 선택 이유도 함께 표시돼요.'},
-  {q:'부분 공사도 계산되나요?',   a:'현재는 전체 리모델링 기준입니다. 욕실만, 주방만 등 부분 공사 기능은 추후 추가 예정입니다.'},
-  {q:'견적서를 이미 받았는데요?', a:'아래 버튼에서 견적서를 AI로 분석하면 항목별 바가지 여부를 확인할 수 있어요.'},
+  {q:'단가 데이터는 어떻게 만들어졌나요?', a:'2024~2025년 국내 아파트 인테리어 실거래 사례와 공종별 시공 단가를 분석해 만든 기준값입니다.\n\n공종마다 자재 등급(절약형·적정·프리미엄)을 구분해 단가 범위를 설정했어요. 예를 들어 도배는 합지벽지(절약형) / 실크벽지(적정) / 수입벽지(프리미엄)로 나눠 각각 다른 단가를 적용합니다.\n\n지역별로는 서울(+28%), 수도권(+12%), 광역시(+5%), 기타(기준) 계수를 곱해 반영합니다. 실제 시공가는 업체·현장 조건에 따라 ±20~30% 차이가 날 수 있으므로, 이 금액은 예산 수립 참고용으로 활용해 주세요.'},
+  {q:'계산된 금액을 그대로 업체에 제시해도 되나요?', a:'직접 제시하기보다는 내 예산의 기준선으로 활용하는 것을 추천해요.\n\n이 계산기는 전국 평균 시세를 기반으로 한 참고값이기 때문에, 실제 현장의 구조·노후도·접근성 등에 따라 업체 견적과 차이가 날 수 있습니다. "이 정도 범위를 기대하고 있다"는 맥락으로 활용하면 업체와 대화할 때 훨씬 유리한 위치에 설 수 있어요.\n\n가장 좋은 활용법은 이 금액으로 예산 상한을 정한 뒤, 3개 이상의 업체에서 견적을 받아 비교하는 것입니다. 항목별로 단가 차이가 나는 이유를 업체에 직접 물어보는 것도 중요해요.'},
+  {q:'절약형·적정·프리미엄 기준이 뭔가요?', a:'세 등급은 자재 품질과 시공 방식의 차이로 나뉩니다.\n\n절약형은 기능에 충실한 기본 자재(합지벽지·PVC장판·보급형 타일 등)로, 예산 관리가 최우선이거나 임대용 세팅에 적합합니다. 적정은 10년 이상 쓸 수 있는 중급 자재(실크벽지·강마루·인조대리석 싱크대 등)로, 실거주 리모델링의 가장 합리적인 선택이에요. 프리미엄은 수입벽지·원목마루·포세린 타일 등 고급 자재와 마이너스 몰딩·히든도어 같은 디자인 시공을 포함합니다.\n\n결과 페이지에서 각 등급 버튼을 누르면 자재 기준 설명과 추천 공종 목록이 함께 나와요.'},
+  {q:'추천 필수 공종은 어떻게 정해지나요?', a:'인테리어 목적과 선택한 등급에 따라 조합이 달라집니다.\n\n예를 들어 "새집처럼 깔끔하게" 목적에서 절약형을 선택하면 도배·바닥재·입주청소 3개가 핵심으로 추천돼요. 같은 목적이라도 프리미엄을 선택하면 욕실·싱크대·발코니샷시까지 최대 10개 공종이 추천됩니다.\n\n미포함 공종도 함께 보여드려서, 등급을 올릴 때 어떤 공종이 추가되는지 한눈에 비교할 수 있어요. 각 공종 옆에는 왜 이 목적에 이 공종이 중요한지 이유도 함께 표시됩니다.'},
+  {q:'받은 견적서가 이 금액보다 훨씬 비싸요. 바가지인가요?', a:'꼭 바가지라고 단정할 수는 없어요. 몇 가지를 먼저 확인해보세요.\n\n첫째, 견적서에 포함된 공종이 이 계산기와 같은지 확인해야 합니다. 철거비·폐기물 처리비·보양 작업·엘리베이터 사용료 등이 추가된 경우 금액이 높아질 수 있어요. 둘째, 자재 등급을 확인하세요. 같은 "욕실 공사"라도 수입 도기·포세린 타일을 쓰면 기준값보다 훨씬 높게 나옵니다. 셋째, 업체 규모와 A/S 보증 기간에 따라 단가가 달라지기도 해요.\n\n이미 받은 견적서가 있다면 아래 AI 분석 서비스에서 항목별 적정 여부를 구체적으로 확인해볼 수 있어요.'},
 ].forEach(f=>{
   const d=document.createElement('div'); d.className='fitem';
-  d.innerHTML=`<button class="fq" onclick="this.closest('.fitem').classList.toggle('open')"><span class="fqt">Q. ${f.q}</span><svg class="farr" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="fa2">A. ${f.a}</div>`;
+  d.innerHTML=`<button class="fq" onclick="this.closest('.fitem').classList.toggle('open')"><span class="fqt">Q. ${f.q}</span><svg class="farr" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="fa2">A. ${f.a.replace(/\n\n/g,'<br><br>')}</div>`;
   document.getElementById('flist').appendChild(d);
 });
 
